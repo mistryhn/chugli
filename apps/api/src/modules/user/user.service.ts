@@ -1,17 +1,13 @@
 import { userRepository } from './user.repository';
-import type { CreateUserInput } from './user.schema';
+
+function toSafeUser<T extends { password: string }>(user: T) {
+  const { ...safeUser } = user;
+  return safeUser;
+}
 
 export const userService = {
   async getUsers() {
-    return userRepository.findAll();
-  },
-
-  async createUser(payload: CreateUserInput) {
-    const existingUser = await userRepository.findByEmail(payload.email);
-    if (existingUser) {
-      throw new Error('User already exists');
-    }
-    const user = await userRepository.create(payload);
-    return user;
+    const users = await userRepository.findAll();
+    return users.map(toSafeUser);
   },
 };

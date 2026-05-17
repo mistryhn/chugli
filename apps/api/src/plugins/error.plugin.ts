@@ -1,6 +1,16 @@
 import { Elysia } from 'elysia';
+import { HttpError } from '@/lib/http-error';
 
 export const errorPlugin = new Elysia().onError(({ code, error, set }) => {
+  if (error instanceof HttpError) {
+    set.status = error.status;
+
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+
   switch (code) {
     case 'VALIDATION':
       set.status = 400;
