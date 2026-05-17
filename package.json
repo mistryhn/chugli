@@ -4,6 +4,8 @@
   "type": "module",
   "private": true,
   "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
     "@eslint/js": "^10.0.1",
     "@types/bun": "latest",
     "eslint": "^10.4.0",
